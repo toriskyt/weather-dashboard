@@ -1,7 +1,30 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+    }
+
 body {
-    background-color: aquamarine;
+    background-color: white;
 }
-.header {
-    justify-content: center;
-    font-size: xx-large;
+.weather {
+    text-align: center;
+    font-size: 300%;
+    padding: 30px;
+    background-image: linear-gradient(to right, blue, rgb(39, 2, 39));
+    margin-bottom: 20px;
+    color: white
+    }
+
+#city {
+    background-color: gray;
+    border: 2px solid black;
+    margin: 12px;
+    padding: 10px;
+    border-radius: 5%;
+    font-size: 100%;
+}
+
+.city-search {
+    font-size: 300%;
 }
