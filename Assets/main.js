@@ -5,3 +5,6 @@
 // 
 // api.openweathermap.org/data/2.5/weather?q={city name}&appid={APIKey}
 
+var displayE1 = $('#display');
+var clearE1 = $('clear');
+
