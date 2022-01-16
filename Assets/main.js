@@ -26,8 +26,18 @@ async function getCityCoordinates(city){
     console.log('city coordinates: ', data);
     getWeatherInfo(lat, lon);
 }
+
+async function searchCityWeather(){
+    const city = document.getElementById("citysearch").value;
+    getCityCoordinates(city);
+}
+
+function populateCities() {
+    const cities = ["Austin", "Chicago", "New York", "Orlando", "San Francisco", "Seattle", "Denver", "Atlanta"];
+    cities.forEach(city => {
+        const button = document.createElement("button");
+    })
+}
 //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 //40.7128° N, 74.0060° W
 
-getCityCoordinates("New York");
-getWeatherInfo(48.7128, 74.0060);

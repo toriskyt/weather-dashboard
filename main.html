@@ -15,13 +15,24 @@
     <a href="https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={88b8ea86d4fcf64ec5b6edf5bb0f8492}"
 ></a>
 
-<main class="container">
-    <script src="Assets/main.js" ></script>
+<script src="Assets/main.js" ></script>
+<div class="mainbody">
+  <div class="leftSection">
+    <h1 class="leftHeader">Search for a City</h1>
+    <input type="search" id="citysearch">
+    <div>
+      <button id="city-search" onclick="searchCityWeather()">Search</button>
+    </div>
+    <hr class="solid">
+    <div class="cityselection"></div>
+  </div>
+  <div>
+    Some content
+  </div>
+</div>
 
-</main>
 <!--
-<h1>Search for a City</h1>
-    <button id="city-search">Search</button>
+
 
 <section class="cities"></section>
     <table>

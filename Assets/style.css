@@ -55,3 +55,15 @@ body {
     border-radius: 5%;
     font-size: 100%;
 }
+
+.mainbody{
+    display: flex;
+}
+
+.leftSection {
+  width: 30%;
+}
+
+.leftHeader {
+  font-weight: bold;
+}
