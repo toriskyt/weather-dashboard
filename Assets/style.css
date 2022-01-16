@@ -67,3 +67,22 @@ body {
 .leftHeader {
   font-weight: bold;
 }
+
+.weatherInfo {
+  padding-top: 10px;
+}
+
+.rightSection {
+    padding-left: 40px;
+    width: 70%;
+}
+
+.weatherboard {
+  border-style: solid;
+  padding-left: 10px;
+}
+
+.cityInfo {
+    font-weight:bold;
+    font-size: 40px;
+}

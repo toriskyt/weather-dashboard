@@ -17,6 +17,7 @@ async function getWeatherInfo(lat, long){
    const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=${apiKey}`);
    const data = await res.json();
    console.log("city weather: ", data);
+
 }
 
 async function getCityCoordinates(city){
@@ -47,7 +48,27 @@ function populateCities() {
         citysection.appendChild(cityDiv);
     });
 }
+
+function getTodayFormattedDate() {
+  const date = new Date();
+  var year = date.getFullYear();
+  
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+  
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+    
+  return month + '/' + day + '/' + year;
+}
+  
+async function populateInitialCity(){
+    getCityCoordinates("Atlanta");
+    const cityName = document.getElementById("cityInfo");
+    cityName.innerText = `Atlanta (${getTodayFormattedDate()})`;
+}
 //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 //40.7128° N, 74.0060° W
 
 populateCities();
+populateInitialCity();
