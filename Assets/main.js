@@ -17,6 +17,10 @@ async function getWeatherInfo(lat, long){
    const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=${apiKey}`);
    const data = await res.json();
    console.log("city weather: ", data);
+   console.log('current weather: ', data.current);
+   const temp = data.current.temp;
+   const tempInfo = document.getElementById("tempInfo");
+   tempInfo.innerHTML = "Temp:" + kelvinToFahrenheit(temp) + "<span>&#176;</span>F";
 
 }
 
@@ -47,6 +51,11 @@ function populateCities() {
         const citysection = document.getElementById("cityselection");
         citysection.appendChild(cityDiv);
     });
+}
+
+function kelvinToFahrenheit(kelvinDegree){
+    const fahrenheit = ((kelvinDegree - 273.15) * 1.8) + 32;
+    return fahrenheit.toFixed(2);
 }
 
 function getTodayFormattedDate() {
