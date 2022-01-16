@@ -35,9 +35,19 @@ async function searchCityWeather(){
 function populateCities() {
     const cities = ["Austin", "Chicago", "New York", "Orlando", "San Francisco", "Seattle", "Denver", "Atlanta"];
     cities.forEach(city => {
+        const cityDiv = document.createElement("div");
         const button = document.createElement("button");
-    })
+        button.innerText = city;
+        button.onclick = function(){
+            getCityCoordinates(city);
+        }
+        button.setAttribute("id", city);
+        cityDiv.appendChild(button);
+        const citysection = document.getElementById("cityselection");
+        citysection.appendChild(cityDiv);
+    });
 }
 //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 //40.7128° N, 74.0060° W
 
+populateCities();
