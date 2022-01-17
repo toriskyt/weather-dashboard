@@ -12,19 +12,39 @@ const apiKey= "88b8ea86d4fcf64ec5b6edf5bb0f8492";
 
 console.log('main js imported!');
 
+function getUVColor(val){
+    if(val <= 2.0){
+      return "green";
+    } else if(val > 2.0 && val <= 7.0){
+        return "yellow";
+    } else if(val > 7.0){
+        return "red";
+    }
+}
+
 async function getWeatherInfo(lat, long){
    // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
    const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=${apiKey}`);
    const data = await res.json();
    console.log("city weather: ", data);
    console.log('current weather: ', data.current);
-   const temp = data.current.temp;
+   const { temp, wind_speed, humidity, uvi } = data.current;
    const tempInfo = document.getElementById("tempInfo");
-   tempInfo.innerHTML = "Temp:" + kelvinToFahrenheit(temp) + "<span>&#176;</span>F";
+   tempInfo.innerHTML = "Temp: " + kelvinToFahrenheit(temp) + "<span>&#176;</span>F";
 
+   const windInfo = document.getElementById("windInfo");
+   windInfo.innerHTML = `Wind Speed: ${wind_speed} MPH`; 
+
+   const humidityInfo = document.getElementById("humidityInfo");
+   humidityInfo.innerHTML = `Humidity: ${humidity} %`;
+
+   const uvInfo = document.getElementById("uvInfo");
+   uvInfo.innerHTML = "UV Index: " + `<div style={ color: ${getUVColor(uvi)}}>${uvi}</div>` 
 }
 
 async function getCityCoordinates(city){
+    const cityName = document.getElementById("cityInfo");
+    cityName.innerText = `${city} (${getTodayFormattedDate()})`;
     const res = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`);
     const data = await res.json();
     const { lat = 0.0, lon = 0.0 } = data[0];
@@ -73,8 +93,6 @@ function getTodayFormattedDate() {
   
 async function populateInitialCity(){
     getCityCoordinates("Atlanta");
-    const cityName = document.getElementById("cityInfo");
-    cityName.innerText = `Atlanta (${getTodayFormattedDate()})`;
 }
 //http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 //40.7128° N, 74.0060° W
