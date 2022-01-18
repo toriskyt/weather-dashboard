@@ -3,7 +3,7 @@ Weather Dashboard
 Tracy Torisky
 ttorisky@gmail.com
 
-![screenshot of weather dashboard](./assets/WeatherDashboard.png)
+![screenshot of weather dashboard](/assets/WeatherDashboard.png)
 
 
 When the user opens the page they are presented with a search button and input box.
