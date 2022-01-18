@@ -52,8 +52,53 @@ async function getWeatherInfo(lat, long){
    uvInfo.appendChild(uviDiv);
 }
 
-function buildCard(cityInfo){
+
+function buildCard(forecastData){
     //date, icon, Temp,  Wind humidity
+    const cardHolder = document.getElementById("forecastCards");
+    cardHolder.innerHTML = '';
+    for(let i = 0; i < forecastData.length; i++){
+        const cardDiv = document.createElement("div");
+        cardDiv.setAttribute("class", "card");
+        cardDiv.style.width = "18rem";
+        cardDiv.style.marginRight = "20px";
+
+        const { date, icon, temp, wind, humidity } = forecastData[i];
+        const formattedDate = getFormattedDate(new Date(date));
+        
+        const dateDiv = document.createElement("div");
+        dateDiv.innerText = `(${formattedDate})`;
+        dateDiv.style.fontWeight = "bold";
+        dateDiv.style.fontSize = "20px";
+
+        const iconDiv = document.createElement("div");
+        iconDiv.style.paddingTop = "15px";
+        const imageIcon = document.createElement("img");
+        const iconurl = "http://openweathermap.org/img/w/" + icon + ".png";
+        imageIcon.setAttribute("src", iconurl);
+        iconDiv.appendChild(imageIcon);
+
+        const tempDiv = document.createElement("div");
+        tempDiv.style.paddingTop = "15px";
+        tempDiv.innerHTML = "Temp: " + temp + "<span>&#176;</span>F";
+
+        const windDiv = document.createElement("div");
+        windDiv.style.paddingTop = "15px";
+        windDiv.innerText = `Wind: ${wind} MPH`;
+
+        const humidityDiv = document.createElement("div");
+        humidityDiv.style.paddingTop = "15px";
+        humidityDiv.innerText = `Humidity: ${humidity} %`;
+
+
+        cardDiv.appendChild(dateDiv);
+        cardDiv.appendChild(iconDiv);
+        cardDiv.appendChild(tempDiv);
+        cardDiv.appendChild(windDiv);
+        cardDiv.appendChild(humidityDiv);
+
+        cardHolder.append(cardDiv);
+    }
 }
 
 async function getCityForecast(city){
@@ -67,14 +112,14 @@ async function getCityForecast(city){
         const { dt_txt, weather, wind, main } = data.list[i];
         console.log('data: ', data.list[i]);
         weatherForecastData.push({ date: dt_txt, icon: weather[0].icon, wind: wind.speed, temp: main.temp, humidity: main.humidity });
-
     }
+    buildCard(weatherForecastData);
     console.log("filtered Data: ", weatherForecastData);
 }
 
 async function getCityCoordinates(city){
     const cityName = document.getElementById("cityInfo");
-    cityName.innerText = `${city} (${getTodayFormattedDate()})`;
+    cityName.innerText = `${city} (${getFormattedDate(new Date())})`;
     const res = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`);
     const data = await res.json();
     const { lat = 0.0, lon = 0.0 } = data[0];
@@ -111,8 +156,7 @@ function kelvinToFahrenheit(kelvinDegree){
     return fahrenheit.toFixed(2);
 }
 
-function getTodayFormattedDate() {
-  const date = new Date();
+function getFormattedDate(date) {
   var year = date.getFullYear();
   
   var month = (1 + date.getMonth()).toString();
