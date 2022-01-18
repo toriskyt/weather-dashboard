@@ -10,8 +10,6 @@
 
 const apiKey= "88b8ea86d4fcf64ec5b6edf5bb0f8492";
 
-console.log('main js imported!');
-
 function getUVColor(val){
     if(val <= 2.0){
       return "green";
@@ -26,8 +24,6 @@ async function getWeatherInfo(lat, long){
    // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
    const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=${apiKey}`);
    const data = await res.json();
-   console.log("city weather: ", data);
-   console.log('current weather: ', data.current);
    const { temp, wind_speed, humidity, uvi } = data.current;
    const tempInfo = document.getElementById("tempInfo");
    tempInfo.innerHTML = "Temp: " + kelvinToFahrenheit(temp) + "<span>&#176;</span>F";
@@ -106,15 +102,12 @@ async function getCityForecast(city){
     const res = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial
     `);
     const data = await res.json();
-    console.log("forecast data: ", data.list);
     const weatherForecastData = [];
     for(let i = 7; i <= 39; i = i + 8){
         const { dt_txt, weather, wind, main } = data.list[i];
-        console.log('data: ', data.list[i]);
         weatherForecastData.push({ date: dt_txt, icon: weather[0].icon, wind: wind.speed, temp: main.temp, humidity: main.humidity });
     }
     buildCard(weatherForecastData);
-    console.log("filtered Data: ", weatherForecastData);
 }
 
 async function getCityCoordinates(city){
@@ -123,7 +116,6 @@ async function getCityCoordinates(city){
     const res = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`);
     const data = await res.json();
     const { lat = 0.0, lon = 0.0 } = data[0];
-    console.log('city coordinates: ', data);
     getWeatherInfo(lat, lon);
     getCityForecast(city);
 }
@@ -145,6 +137,14 @@ function populateCities() {
             getCityCoordinates(city);
         }
         button.setAttribute("id", city);
+        button.style.border = "none";
+        button.style.marginTop = "15px";
+        button.style.borderRadius = "5px";
+        button.style.width = "100%";
+        button.style.height = "40px";
+        button.style.backgroundColor = "#D3D3D3";
+
+
         cityDiv.appendChild(button);
         const citysection = document.getElementById("cityselection");
         citysection.appendChild(cityDiv);
