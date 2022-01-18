@@ -18,7 +18,7 @@ body {
 
 #city {
     background-color:gray;
-    text: black
+    font: black;
     border: 2px solid black;
     radius: 2%;
     margin: 12px;
@@ -34,7 +34,7 @@ body {
 
 #city-search {
     font-size: 150%;
-    width: 15%;
+    width: 30%;
     background-color: lightblue;
     border-radius: 5%;
 }
@@ -80,9 +80,42 @@ body {
 .weatherboard {
   border-style: solid;
   padding-left: 10px;
+  padding-bottom: 15px;
 }
 
 .cityInfo {
     font-weight:bold;
     font-size: 40px;
+}
+
+.card {
+    background-color: rgb(99, 109, 124);
+    color: white;
+}
+.list-group-item {
+    background-color: rgb(99, 109, 124);
+    color:white;
+}
+.container {
+    display: flex;
+    flex-direction: inline-block;
+    justify-content: space-evenly;
+    margin-right: 0%;
+}
+
+.forecastsection {
+    padding-top: 10px;
+
+}
+
+.forecastHeader {
+  font-weight: bold;
+  font-size: 35px;
+}
+
+.forecastCards {
+    display: flex;
+    flex-direction: inline-block;
+    justify-content: space-evenly;
+    margin-right: 0%;   
 }

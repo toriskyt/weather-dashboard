@@ -39,7 +39,37 @@ async function getWeatherInfo(lat, long){
    humidityInfo.innerHTML = `Humidity: ${humidity} %`;
 
    const uvInfo = document.getElementById("uvInfo");
-   uvInfo.innerHTML = "UV Index: " + `<div style={ color: ${getUVColor(uvi)}}>${uvi}</div>` 
+   const uviDiv = document.createElement("div");
+   uviDiv.innerText = uvi;
+   uviDiv.style.backgroundColor = getUVColor(uvi);
+   uviDiv.style.color = "white";
+   uviDiv.style.display = "inline-block";
+   uviDiv.style.paddingLeft = "0.5%";
+   uviDiv.style.width = "40px";
+   uviDiv.style.borderRadius = "5px";
+
+   uvInfo.innerHTML = "UV Index: ";
+   uvInfo.appendChild(uviDiv);
+}
+
+function buildCard(cityInfo){
+    //date, icon, Temp,  Wind humidity
+}
+
+async function getCityForecast(city){
+    //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+    const res = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial
+    `);
+    const data = await res.json();
+    console.log("forecast data: ", data.list);
+    const weatherForecastData = [];
+    for(let i = 7; i <= 39; i = i + 8){
+        const { dt_txt, weather, wind, main } = data.list[i];
+        console.log('data: ', data.list[i]);
+        weatherForecastData.push({ date: dt_txt, icon: weather[0].icon, wind: wind.speed, temp: main.temp, humidity: main.humidity });
+
+    }
+    console.log("filtered Data: ", weatherForecastData);
 }
 
 async function getCityCoordinates(city){
@@ -50,7 +80,10 @@ async function getCityCoordinates(city){
     const { lat = 0.0, lon = 0.0 } = data[0];
     console.log('city coordinates: ', data);
     getWeatherInfo(lat, lon);
+    getCityForecast(city);
 }
+
+
 
 async function searchCityWeather(){
     const city = document.getElementById("citysearch").value;
