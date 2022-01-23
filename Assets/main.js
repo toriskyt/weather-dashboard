@@ -99,7 +99,7 @@ function buildCard(forecastData){
 
 async function getCityForecast(city){
     //api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-    const res = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial
     `);
     const data = await res.json();
     const weatherForecastData = [];
@@ -113,7 +113,7 @@ async function getCityForecast(city){
 async function getCityCoordinates(city){
     const cityName = document.getElementById("cityInfo");
     cityName.innerText = `${city} (${getFormattedDate(new Date())})`;
-    const res = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`);
+    const res = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`);
     const data = await res.json();
     const { lat = 0.0, lon = 0.0 } = data[0];
     getWeatherInfo(lat, lon);
